@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Global Configuration Override
  *
@@ -10,7 +11,17 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
 return array(
-    // ...
+    'db' => array(
+        'driver' => 'pdo_mysql',
+        'hostname' => '127.0.0.1',
+        'database' => 'store',
+        'username' => 'root',
+        'password' => '',
+        'port' => '3306',
+        'options' => array('buffer_results' => true),
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'utf8\''
+        )
+    ),
 );
