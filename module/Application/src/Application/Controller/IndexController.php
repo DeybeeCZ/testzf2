@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -11,28 +12,39 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\Db\Adapter\Adapter;
+use Zend\Db\Adapter\Adapter as DbAdapter;
+use Application\Model\Table\ProductoTable as ProductoTable;
 
-class IndexController extends AbstractActionController
-{
-    public function indexAction()
-    {
+class IndexController extends AbstractActionController {
+    
+    protected $productTable;
+
+    public function indexAction() {
         return new ViewModel();
     }
-    
-    public function productAction(){
+
+    public function productAction() {
+
         
-        var_dump($this->adapter);
+        var_dump($this->getProductTable());
         exit();
-        var_dump($table->getProduct());
-        exit();
-        
-        $product=array(
-            array('name'=>'Nombre 1'),
-            array('name'=>'Nombre 2'),
-            array('name'=>'Nombre 3'),
-            array('name'=>'Nombre 4'),
+
+        $product = array(
+            array('name' => 'Nombre 1'),
+            array('name' => 'Nombre 2'),
+            array('name' => 'Nombre 3'),
+            array('name' => 'Nombre 4'),
         );
-        return new ViewModel(array('product'=>$product));
+        return new ViewModel(array('product' => $product));
     }
+    
+     public function getProductTable()
+     {
+         if (!$this->productTable) {
+             $sm = $this->getServiceLocator();
+             $this->productTable = $sm->get('Application\Model\ProductTable');
+         }
+         return $this->productTable;
+     }
+
 }
